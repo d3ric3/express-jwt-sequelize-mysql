@@ -124,6 +124,18 @@ app.post("/login", async function (req, res, next) {
   }
 });
 
+// protected route
+// Send GET request with Header `Authorization: Bearer ${token_value}`
+app.get(
+  "/protected",
+  passport.authenticate("jwt", { session: false }),
+  function (req, res) {
+    res.json({
+      msg: "Congrats! You are seeing this because you are authorized",
+    });
+  }
+);
+
 // error handling
 app.use((err, req, res, next) => {
   console.error(err.stack);
